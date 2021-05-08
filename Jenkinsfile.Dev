@@ -12,6 +12,11 @@ pipeline {
                 branch: 'main'
             }
         }
+        stage('Build server image') {
+          steps {
+              docker.build("eran101/morse-server")
+          }
+        }
     }
 }
 
