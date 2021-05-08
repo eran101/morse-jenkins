@@ -24,9 +24,9 @@ pipeline {
             withDockerRegistry(credentialsId: 'dockerhub_id') {
             docker.push("${env.BUILD_NUMBER}")
             docker.push("latest")
-}
+            }
           }
-        })
+        }
     }
 }
 
