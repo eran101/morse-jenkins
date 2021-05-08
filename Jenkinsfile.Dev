@@ -22,7 +22,7 @@ pipeline {
        stage('Push image') {
          steps {
            script {
-       docker.withRegistry("${registry}", "${registryCredential}") {
+       withRegistry("${registry}", "${registryCredential}") {
        docker.push("${env.BUILD_NUMBER}")            
        docker.push("latest")        
               }    
