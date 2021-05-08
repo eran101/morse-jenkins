@@ -19,13 +19,12 @@ pipeline {
             }
           }
         }
-        stage('Push server image' {
-          script {
-            withDockerRegistry(credentialsId: 'dockerhub_id') {
-            docker.push("${env.BUILD_NUMBER}")
-            docker.push("latest")
-            }
-          }
+       stage('Push image') {
+       docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_id') {            
+       docker.push("${env.BUILD_NUMBER}")            
+       docker.push("latest")        
+              }    
+           }
         }
     }
 }
