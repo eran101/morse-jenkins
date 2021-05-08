@@ -14,7 +14,9 @@ pipeline {
         }
         stage('Build server image') {
           steps {
+            script {
               docker.build("eran101/morse-server")
+            }
           }
         }
     }
