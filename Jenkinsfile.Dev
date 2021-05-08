@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "eran101/morse-server"
+    registry = "https://registry.hub.docker.com/eran101/morse-server"
     registryCredential = 'dockerhub_id'
     dockerImage = 'latest'
   }
