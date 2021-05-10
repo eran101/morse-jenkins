@@ -15,7 +15,7 @@ pipeline {
         stage('Build server image') {
           steps {
             script {
-              simage = docker.build("eran101/morse-server", "-f DockerfileS ./dockerfiles")
+              simage = docker.build("eran101/morse-server", "-f ./dockerfiles/DockerfileS")
             }
           }
         }
