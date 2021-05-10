@@ -6,7 +6,7 @@ pipeline {
   }
   agent any
     stages {
-        stage('Git clone') {
+        stage('Git clone server code') {
             steps {
                 git url: 'https://github.com/eran101/morse-server.git', 
                 branch: 'main'
@@ -19,7 +19,7 @@ pipeline {
             }
           }
         }
-       stage('Push image') {
+       stage('Push server image') {
          steps {
            script {
        docker.withRegistry("${registry}", "${registryCredential}") {
