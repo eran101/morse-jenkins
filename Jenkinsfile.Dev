@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "https://registry.hub.docker.com/eran101/morse-server"
+    sregistry = "https://registry.hub.docker.com/eran101/morse-server"
     registryCredential = 'dockerhub_id'
     dockerImage = 'latest'
   }
@@ -22,7 +22,7 @@ pipeline {
        stage('Push server image') {
          steps {
            script {
-       docker.withRegistry("${registry}", "${registryCredential}") {
+       docker.withRegistry("${sregistry}", "${registryCredential}") {
        simage.push("${env.BUILD_NUMBER}")            
        simage.push("latest")        
               }    
