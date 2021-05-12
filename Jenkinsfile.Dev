@@ -7,7 +7,7 @@ pipeline {
   }
   agent any
     stages {
-        stage('Git clone server code') {
+        stage('Git clone server') {
             steps {
                 git url: 'https://github.com/eran101/morse-server.git', 
                 branch: 'main'
@@ -31,7 +31,7 @@ pipeline {
         }
     }
 
-        stage('Git clone client code') {
+        stage('Git clone client') {
             steps {
                 git url: 'https://github.com/eran101/morse-client.git', 
                 branch: 'main'
