@@ -23,9 +23,9 @@ pipeline {
        stage('Push server image') {
          steps {
            script {
-       docker.withRegistry("${sregistry}", "${registryCredential}") {
-       simage.push("${env.BUILD_NUMBER}")            
-       simage.push("latest")        
+              docker.withRegistry("${sregistry}", "${registryCredential}") {
+              simage.push("${env.BUILD_NUMBER}")            
+              simage.push("latest")        
               }    
            }
         }
@@ -40,16 +40,16 @@ pipeline {
         stage('Build client image') {
           steps {
             script {
-              simage = docker.build("eran101/morse-client", "-f DockerfileC .")
+              cimage = docker.build("eran101/morse-client", "-f DockerfileC .")
             }
           }
         }
        stage('Push client image') {
          steps {
            script {
-       docker.withRegistry("${cregistry}", "${registryCredential}") {
-       simage.push("${env.BUILD_NUMBER}")            
-       simage.push("latest")        
+              docker.withRegistry("${cregistry}", "${registryCredential}") {
+              cimage.push("${env.BUILD_NUMBER}")            
+              cimage.push("latest")        
               }    
            }
         }
