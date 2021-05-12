@@ -1,6 +1,7 @@
 pipeline {
   environment {
     sregistry = "https://registry.hub.docker.com/eran101/morse-server"
+    cregistry = "https://registry.hub.docker.com/eran101/morse-client"
     registryCredential = 'dockerhub_id'
     dockerImage = 'latest'
   }
@@ -29,5 +30,30 @@ pipeline {
            }
         }
     }
+
+        stage('Git clone client code') {
+            steps {
+                git url: 'https://github.com/eran101/morse-client.git', 
+                branch: 'main'
+            }
+        }
+        stage('Build client image') {
+          steps {
+            script {
+              simage = docker.build("eran101/morse-client", "-f DockerfileC .")
+            }
+          }
+        }
+       stage('Push client image') {
+         steps {
+           script {
+       docker.withRegistry("${cregistry}", "${registryCredential}") {
+       simage.push("${env.BUILD_NUMBER}")            
+       simage.push("latest")        
+              }    
+           }
+        }
+    }
+
 }
 }
