@@ -1,0 +1,90 @@
+pipeline {
+  environment {
+    sregistry = "https://registry.hub.docker.com/eran101/morse-server"
+    cregistry = "https://registry.hub.docker.com/eran101/morse-client"
+    registryCredential = 'dockerhub_id'
+    dockerImage = 'latest'
+  }
+  agent any
+    stages {      
+        stage('Git clone server') {
+            steps {
+                git url: 'https://github.com/eran101/morse-server.git', 
+                branch: 'main'
+            }
+        }
+        stage('Build server image') {
+          steps {
+            script {
+              simage = docker.build("eran101/morse-server", "-f DockerfileS .")
+            }
+          }
+        }
+       stage('Push server image') {
+         steps {
+           script {
+              docker.withRegistry("${sregistry}", "${registryCredential}") {
+              simage.push("${env.BUILD_NUMBER}")            
+              simage.push("latest")        
+              }    
+           }
+        }
+    }
+        stage('Cleanup containers - Pre') {
+            steps {
+                sh 'docker rm -f server client 2>/dev/null'
+            }
+        }            
+        stage('Create a Docker network') {
+            steps {
+                sh 'docker network inspect devtest >/dev/null 2>&1 || \
+                    docker network create --driver bridge devtest'
+            }
+        }
+        stage('Run a server container') {
+            steps {
+                sh 'docker run -d --pull always --name server --network devtest eran101/morse-server'
+            }
+        }    
+
+        stage('Git clone client') {
+            steps {
+                git url: 'https://github.com/eran101/morse-client.git', 
+                branch: 'main'
+            }
+        }
+        stage('Build client image') {
+          steps {
+            script {
+              cimage = docker.build("eran101/morse-client", "-f DockerfileC .")
+            }
+          }
+        }
+       stage('Push client image') {
+         steps {
+           script {
+              docker.withRegistry("${cregistry}", "${registryCredential}") {
+              cimage.push("${env.BUILD_NUMBER}")            
+              cimage.push("latest")        
+              }    
+           }
+        }
+    }
+        stage('Run a client container') {
+            steps {
+                sh 'docker run -d --pull always --name client --network devtest eran101/morse-client'
+            }            
+        }
+        stage('Output log') {
+            steps {
+                sh 'docker logs -f client'
+            }            
+        }
+        stage('Cleanup containers - Post') {
+            steps {
+                sh 'docker rm -f server client 2>/dev/null'
+            }
+        }              
+    }       
+
+}
