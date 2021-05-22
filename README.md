@@ -51,13 +51,13 @@ This can fixed: <br/>
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 * The server code dependencies can be installed using composer.
 * Composer has zip dependencies.
-* Composer is mostly in use for production images.
+* Composer is mostly in use for production images. <br/>
 It is not included in the dockerfile to simpilfy the process.
 https://github.com/mlocati/docker-php-extension-installer/issues/52*issuecomment-552089901 
-* The EC2 deployment, Jenkins and Docker installation can be automated.
+* The EC2 deployment, Jenkins and Docker installation can be automated. <br/>
 This can be done using AWS CLI and user data script / IaC tool such as Terraform.
 * It is possible to split each container run Jenkins step to 2: pull and run.
-* The server container is running Apache HTTP.
+* The server container is running Apache HTTP. <br/>
 It might quit with SIGWINCH when it is attached:
 https://github.com/docker-library/php/issues/892#issuecomment-531310247
 https://github.com/docker-library/php/issues/892#issuecomment-531328870
