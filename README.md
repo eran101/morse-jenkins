@@ -3,10 +3,10 @@
 This repository contains the jenkinsfile and documentation.
 
 
-## Examples:
+## Files:
 [Jenkins pipline configuration](config.xml)
 
-[Log](log.txt)
+[An example job log](log.txt)
 
 ## Assumptions:
 
