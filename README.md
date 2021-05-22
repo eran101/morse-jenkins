@@ -4,7 +4,7 @@ This repository contains the jenkinsfile and documentation.
 
 
 ## Files:
-[Jenkins pipline configuration](https://gist.github.com/eran101/0534d89dd1fc550c8b49eb3634e8db70)
+[Jenkins pipeline configuration](https://gist.github.com/eran101/0534d89dd1fc550c8b49eb3634e8db70)
 
 [An example Jenkins job log](https://gist.github.com/eran101/32adfea2138059aac907ec3b48f0daf9)
 
