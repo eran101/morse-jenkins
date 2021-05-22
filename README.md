@@ -18,6 +18,7 @@ sudo usermod -aG docker jenkins
 newgrp docker
 sudo systemctl restart jenkins 
 (For Linux distros using Systemd)
+* The Jekins pipeline is using the configuration from the config file above.
 * Jenkins is configured to run on boot if required:
 sudo systemctl enable jenkins
 (For Linux distros using Systemd)
