@@ -46,9 +46,8 @@ For production environment:
 https://www.knownhost.com/wiki/control-panels/misc/php-handlers-explained#dso
 * Server headers should be disabled in the services configuration (PHP and Web server versions)
 * Containers should be scanned for vulnerabilities 
-* There will be warning in the Jenkins job log about using a credential helper (for token too).
+* There will be warning in the Jenkins job log about using a credential helper (for token too). <br/>
 This can fixed:
-
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 * The server code dependencies can be installed using composer.
 * Composer has zip dependencies.
