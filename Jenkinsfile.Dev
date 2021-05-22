@@ -6,7 +6,7 @@ pipeline {
     dockerImage = 'latest'
   }
   agent any
-    stages {
+    stages {      
         stage('Git clone server') {
             steps {
                 git url: 'https://github.com/eran101/morse-server.git', 
@@ -30,6 +30,22 @@ pipeline {
            }
         }
     }
+        stage('Cleanup containers - Pre') {
+            steps {
+                sh 'docker rm -f server client 2>/dev/null'
+            }
+        }            
+        stage('Create a Docker network') {
+            steps {
+                sh 'docker network inspect devtest >/dev/null 2>&1 || \
+                    docker network create --driver bridge devtest'
+            }
+        }
+        stage('Run a server container') {
+            steps {
+                sh 'docker run -d --pull always --name server --network devtest eran101/morse-server'
+            }
+        }    
 
         stage('Git clone client') {
             steps {
@@ -54,6 +70,22 @@ pipeline {
            }
         }
     }
+        stage('Run a client container') {
+            steps {
+                sh 'docker run -d --pull always --name client --network devtest eran101/morse-client'
+            }            
+        }
+        stage('Output log') {
+            steps {
+                sh 'docker logs -f client'
+            }            
+        }
+        stage('Cleanup containers - Post') {
+            steps {
+                sh 'docker rm -f server client 2>/dev/null'
+            }
+        }              
+    }       
 
 }
 }
